@@ -171,8 +171,8 @@ details[open] summary::after { content: "\2212"; }
 .note { margin-top: 28px; font-size: 0.84rem; color: var(--muted); max-width: 46em; }
 .nm { font: inherit; font-size: 0.94rem; font-weight: 300; background: none; border: 0; border-bottom: 1px dotted var(--muted); color: var(--fg); padding: 3px 7px; margin: 0; cursor: help; }
 .nm:hover, .nm:focus-visible, .nm[aria-expanded="true"] { background: var(--inv-bg); color: var(--inv-fg); border-bottom-color: transparent; }
-#pop { position: fixed; z-index: 60; width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: hidden; background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--fg); border: 1px solid var(--rule); border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.22); transition: opacity 0.16s ease, transform 0.16s ease, visibility 0s; padding: 16px 18px 14px; font-size: 0.88rem; line-height: 1.55; pointer-events: none; }
-#pop[hidden] { display: block; opacity: 0; visibility: hidden; transform: translateY(6px) scale(0.97); transition: opacity 0.12s ease, transform 0.12s ease, visibility 0s linear 0.12s; }
+#pop { position: fixed; z-index: 60; width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: hidden; background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--fg); border: 1px solid var(--rule); border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.22); transition: opacity 0.4s ease, filter 0.4s ease, visibility 0s; padding: 16px 18px 14px; font-size: 0.88rem; line-height: 1.55; pointer-events: none; }
+#pop[hidden] { display: block; opacity: 0; visibility: hidden; filter: blur(5px); transition: opacity 0.35s ease, filter 0.35s ease, visibility 0s linear 0.35s; }
 @media (prefers-reduced-motion: reduce) { #pop, #pop[hidden] { transition: none; } }
 #pop h4 { margin: 0 0 2px; font-weight: 500; font-size: 1.15rem; letter-spacing: -0.01em; }
 #pop .pt { margin: 0 0 8px; }
