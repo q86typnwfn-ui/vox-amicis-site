@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="VOX AMICIS, a professional vocal ensemble based in Seoul and New York.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<title>VOX AMICIS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..800&family=Gothic+A1:wght@100;200;300;400;500;600;700&display=swap">
+<style>
+/* Layout concept: strict Swiss grid in pure black and white, taken from the logo. Sticky header, logo-led hero, a two-photo band, date-led concert rows (as on The Sixteen), a Watch and Listen tile row, artists with the chorus roster, and a support block. Photographs are grayscale to stay inside the logo's palette. */
+:root {
+  --bg: #ffffff;
+  --fg: #0a0a0a;
+  --muted: #5a5a5a;
+  --rule: #0a0a0a;
+  --hair: #d4d4d4;
+  --inv-bg: #0a0a0a;
+  --inv-fg: #ffffff;
+  --logo-filter: none;
+  --font: 'Archivo', 'Gothic A1', 'Apple SD Gothic Neo', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0a0a;
+    --fg: #f4f4f4;
+    --muted: #9b9b9b;
+    --rule: #f4f4f4;
+    --hair: #2d2d2d;
+    --inv-bg: #f4f4f4;
+    --inv-fg: #0a0a0a;
+    --logo-filter: invert(1);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --fg: #f4f4f4;
+  --muted: #9b9b9b;
+  --rule: #f4f4f4;
+  --hair: #2d2d2d;
+  --inv-bg: #f4f4f4;
+  --inv-fg: #0a0a0a;
+  --logo-filter: invert(1);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-padding-top: 76px; scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 400;
+  padding-block: 0 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 10; }
+:root[data-lang="en"] .ko { display: none; }
+:root:not([data-lang="en"]) .en { display: none; }
+
+.wrap { max-width: 1240px; margin: 0 auto; min-width: 0; }
+a { color: inherit; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.logo { filter: var(--logo-filter); display: block; max-width: 100%; height: auto; }
+.cap { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+.muted { color: var(--muted); }
+
+/* header */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--rule); }
+.bar .wrap { display: flex; align-items: center; gap: 12px 28px; flex-wrap: wrap; padding-block: 12px; }
+.mark { display: block; width: 30px; }
+.name { text-decoration: none; margin-right: auto; display: block; line-height: 0; }
+.logo.word { height: 14px; width: auto; }
+nav { display: flex; flex-wrap: wrap; gap: 2px 24px; font-size: 0.86rem; }
+nav a { text-decoration: none; }
+nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.lang { display: inline-flex; border: 1px solid var(--rule); }
+.lang button { font: inherit; font-size: 0.74rem; letter-spacing: 0.08em; background: none; border: 0; color: var(--fg); padding: 4px 12px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+/* hero */
+.hero { position: relative; isolation: isolate; min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 40px 64px; align-items: center; padding-block: 56px 64px; border-bottom: 1px solid var(--rule); }
+.herobg { position: absolute; top: 0; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); z-index: -1; overflow: hidden; background: var(--bg); pointer-events: none; }
+.herobg video { position: absolute; left: -4%; top: -4%; width: 108%; height: 108%; object-fit: cover; filter: grayscale(1) blur(6px); opacity: 0; transition: opacity 1.4s ease; }
+.herobg video.on { opacity: 0.6; }
+.herobg::after { content: ""; position: absolute; inset: 0; background: var(--bg); opacity: 0.45; }
+.hero .logo { width: 100%; max-width: 520px; }
+h1 { font-stretch: 112%; font-weight: 200; font-size: clamp(2.6rem, 6.6vw, 5.4rem); line-height: 1.02; letter-spacing: -0.025em; margin: 14px 0 24px; text-wrap: balance; }
+:root:not([data-lang="en"]) h1 { font-weight: 300; letter-spacing: -0.03em; }
+.lede { font-size: 1.1rem; max-width: 30em; margin: 0 0 32px; font-weight: 300; }
+.status { display: grid; border-top: 1px solid var(--rule); }
+.status a, .status div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) auto; gap: 8px 16px; align-items: baseline; padding-block: 13px; border-bottom: 1px solid var(--hair); text-decoration: none; }
+.status a:hover { background: var(--inv-bg); color: var(--inv-fg); padding-inline: 10px; }
+.status .arrow { font-weight: 300; }
+
+/* photo band */
+.photos { display: grid; grid-template-columns: minmax(0, 0.879fr) minmax(0, 1fr); gap: 0 16px; padding-block: 48px; border-bottom: 1px solid var(--rule); }
+figure { margin: 0; min-width: 0; }
+figure img { display: block; width: 100%; height: auto; background: var(--hair); }
+figcaption { font-size: 0.78rem; color: var(--muted); padding-top: 8px; }
+
+/* sections */
+section { padding-block: 64px; border-bottom: 1px solid var(--rule); }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 32px; margin-bottom: 36px; }
+h2 { font-stretch: 112%; font-weight: 200; font-size: clamp(2rem, 4.6vw, 3.4rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+:root:not([data-lang="en"]) h2 { font-weight: 300; }
+h3 { font-weight: 500; font-size: 1.35rem; line-height: 1.25; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+p { margin: 0 0 1em; max-width: 38em; }
+.sub { margin: 40px 0 0; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.sub:first-of-type { margin-top: 0; }
+
+/* concerts, date-led rows */
+.empty { padding-block: 22px; border-bottom: 1px solid var(--hair); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; }
+.empty p { margin: 0; }
+.event { display: grid; grid-template-columns: 9rem minmax(0, 1fr) 11rem; gap: 12px 32px; padding-block: 28px; border-bottom: 1px solid var(--hair); align-items: start; }
+.date .day { display: block; font-stretch: 100%; font-weight: 200; font-size: 3.4rem; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.date .my { display: block; margin-top: 6px; }
+.event .meta { margin: 8px 0 0; color: var(--muted); font-size: 0.94rem; }
+.event .about { margin: 12px 0 0; }
+.event .quote { margin: 14px 0 0; font-weight: 300; font-size: 1.05rem; max-width: 34em; }
+.event .ordinal { margin: 0 0 8px; }
+.event figure { margin-top: 20px; }
+.side { text-align: right; font-size: 0.9rem; }
+.side a { display: inline-block; padding: 6px 0; }
+details { margin-top: 18px; border-top: 1px solid var(--hair); }
+summary { list-style: none; cursor: pointer; padding-block: 12px; display: flex; justify-content: space-between; font-size: 0.74rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 1.1rem; letter-spacing: 0; }
+details[open] summary::after { content: "\2212"; }
+.program { margin: 0 0 8px; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0 40px; }
+.program li { padding: 9px 0; border-top: 1px solid var(--hair); font-size: 0.94rem; min-width: 0; }
+.program li.part { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 10px; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+.program li.part:first-child { margin-top: 0; }
+.program b { font-weight: 600; }
+.program i { font-style: normal; font-weight: 300; }
+.program small { display: block; color: var(--muted); font-size: 0.84rem; }
+.credits { font-size: 0.84rem; color: var(--muted); margin: 14px 0 0; max-width: 46em; }
+
+
+.media { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px; align-items: start; }
+.media .wide { grid-column: 1 / -1; }
+.media figure { margin: 0; }
+.clips { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 10px; margin-top: 14px; }
+.clip { position: relative; margin: 0; }
+.clip video { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; object-fit: cover; background: #000; filter: grayscale(1) contrast(1.05); opacity: 0.5; transition: opacity 0.3s; }
+.clip .playbtn { position: absolute; inset: 0 0 auto 0; aspect-ratio: 16 / 9; width: 100%; display: flex; align-items: center; justify-content: center; background: none; border: 0; cursor: pointer; color: #fff; font: inherit; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; text-shadow: 0 0 6px rgba(0,0,0,0.8); }
+.clip .playbtn::before { content: "\25B6"; margin-right: 8px; font-size: 0.7rem; }
+.clip:hover video, .clip.playing video { opacity: 1; }
+.clip.playing .playbtn { opacity: 0; }
+.clip.playing video { filter: none; }
+.clip figcaption { padding-top: 5px; }
+.roster { margin-top: 22px; }
+.names2 { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px 2px; }
+.grp { margin-top: 28px; }
+.grp:first-of-type { margin-top: 0; }
+.yrs { display: block; font-size: 0.66rem; letter-spacing: 0.06em; opacity: 0.6; font-weight: 400; margin-top: 1px; }
+.names3 { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 0.96rem; font-weight: 300; }
+.names3 small { margin-left: 6px; font-size: 0.72rem; opacity: 0.6; letter-spacing: 0.04em; }
+.note { margin-top: 28px; font-size: 0.84rem; color: var(--muted); max-width: 46em; }
+.nm { font: inherit; font-size: 0.94rem; font-weight: 300; background: none; border: 0; border-bottom: 1px dotted var(--muted); color: var(--fg); padding: 3px 7px; margin: 0; cursor: help; }
+.nm:hover, .nm:focus-visible, .nm[aria-expanded="true"] { background: var(--inv-bg); color: var(--inv-fg); border-bottom-color: transparent; }
+#pop { position: fixed; z-index: 60; width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: hidden; background: var(--bg); color: var(--fg); border: 1px solid var(--rule); box-shadow: 0 10px 30px rgba(0,0,0,0.25); padding: 14px 16px 12px; font-size: 0.88rem; line-height: 1.55; pointer-events: none; }
+#pop[hidden] { display: none; }
+#pop h4 { margin: 0 0 2px; font-weight: 500; font-size: 1.15rem; letter-spacing: -0.01em; }
+#pop .pt { margin: 0 0 8px; }
+#pop .ph { display: flex; gap: 12px; align-items: center; margin: 0 0 8px; }
+#pop .ph img { width: 72px; height: 72px; object-fit: cover; flex: none; filter: grayscale(1); }
+#pop .ph .pt { margin: 0; }
+#pop p { margin: 0 0 6px; max-width: none; font-weight: 300; }
+#pop ul { margin: 0; padding: 0; list-style: none; }
+#pop li { padding: 1px 0 1px 14px; text-indent: -14px; font-weight: 300; }
+#pop li::before { content: "- "; }
+#pop .src { margin: 8px 0 0; font-size: 0.72rem; color: var(--muted); }
+@media (max-width: 720px) { .media { grid-template-columns: minmax(0, 1fr); } }
+.yt { margin-top: 22px; }
+.yt ul { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+.yt li { border-bottom: 1px solid var(--hair); }
+.yt a { display: grid; grid-template-columns: minmax(0, 1fr) auto 1.6rem; gap: 12px; align-items: baseline; padding: 10px 0; text-decoration: none; font-size: 0.94rem; }
+.yt a:hover { background: var(--inv-bg); color: var(--inv-fg); padding-inline: 10px; }
+.yt .dur { opacity: 0.65; font-variant-numeric: tabular-nums; font-size: 0.84rem; }
+.yt .pl { font-size: 0.7rem; text-align: right; }
+
+
+.contact { max-width: 1240px; margin: 40px auto 0; padding-top: 28px; border-top: 1px solid var(--inv-fg); display: grid; gap: 16px; }
+.contact .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.contact label { display: grid; gap: 6px; min-width: 0; }
+.contact .lb { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
+.contact input, .contact textarea { font: inherit; font-size: 1rem; width: 100%; background: transparent; color: var(--inv-fg); border: 1px solid var(--inv-fg); border-radius: 0; padding: 10px 12px; }
+.contact textarea { resize: vertical; min-height: 140px; }
+.contact input:focus-visible, .contact textarea:focus-visible, .contact button:focus-visible { outline: 2px solid var(--inv-fg); outline-offset: 3px; }
+.contact .send { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.contact .send button { font: inherit; font-size: 0.95rem; background: var(--inv-fg); color: var(--inv-bg); border: 1px solid var(--inv-fg); padding: 12px 34px; cursor: pointer; }
+.contact .send button:hover { background: transparent; color: var(--inv-fg); }
+.contact .msg { font-size: 0.86rem; font-weight: 300; }
+@media (max-width: 720px) { .contact .row2 { grid-template-columns: minmax(0, 1fr); } }
+
+/* watch and listen */
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+.tile { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 22px; min-height: 280px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-width: 0; }
+.tile.solid { background: var(--inv-bg); color: var(--inv-fg); }
+.tile h3 { font-stretch: 108%; font-weight: 300; font-size: clamp(1.5rem, 2.6vw, 2.1rem); letter-spacing: -0.02em; }
+.tile p { margin: 10px 0 0; font-size: 0.92rem; font-weight: 300; }
+.tile ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 0.92rem; }
+.tile a:hover { text-decoration-thickness: 2px; }
+
+/* artists */
+.artists { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; }
+.artist { border-top: 1px solid var(--rule); padding-top: 18px; min-width: 0; }
+.artist h3 { font-stretch: 108%; font-weight: 300; font-size: 1.9rem; letter-spacing: -0.02em; margin: 6px 0 14px; }
+.artist p { font-size: 0.94rem; font-weight: 300; }
+.artist ul { list-style: none; margin: 0 0 1em; padding: 0; font-size: 0.9rem; font-weight: 300; }
+.artist li { padding: 3px 0; border-top: 1px solid var(--hair); }
+.chorus { margin-top: 56px; border-top: 1px solid var(--rule); padding-top: 18px; }
+.names { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 1.02rem; font-weight: 300; }
+.names li { white-space: nowrap; }
+
+/* about and support */
+.about-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 64px; }
+.about-grid p { font-size: 1.12rem; font-weight: 300; }
+dl { margin: 0; }
+dl div { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 12px; padding-block: 12px; border-top: 1px solid var(--hair); }
+dt { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; padding-top: 3px; }
+dd { margin: 0; }
+.support { background: var(--inv-bg); color: var(--inv-fg); border-bottom: 0; margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%); }
+.support .inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 64px; align-items: end; }
+.support .btns { display: flex; flex-direction: column; gap: 10px; }
+.support .btn { display: flex; justify-content: space-between; gap: 16px; padding: 14px 16px; border: 1px solid var(--inv-fg); text-decoration: none; font-size: 0.95rem; }
+.support .btn:hover { background: var(--inv-fg); color: var(--inv-bg); }
+.support p { font-weight: 300; font-size: 1.08rem; }
+
+/* footer */
+footer { padding-block: 48px 40px; }
+.cols { display: grid; grid-template-columns: 1.3fr repeat(3, minmax(0, 1fr)); gap: 32px 40px; }
+.cols ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 4px; font-size: 0.92rem; }
+.cols .logo { width: 150px; }
+.legal { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 0.8rem; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .event { grid-template-columns: 6.5rem minmax(0, 1fr); }
+  .side { grid-column: 2; text-align: left; }
+  .date .day { font-size: 2.6rem; }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .tile { min-height: 200px; }
+  .artists { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .about-grid, .support .inner { grid-template-columns: minmax(0, 1fr); }
+  .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .hero { grid-template-columns: minmax(0, 1fr); padding-block: 32px 40px; }
+  .hero .logo { max-width: 300px; }
+  .photos { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 32px; }
+  .status a, .status div { grid-template-columns: minmax(0, 1fr) auto; }
+  .status .cap { grid-column: 1 / -1; }
+  section { padding-block: 44px; }
+  nav { order: 3; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+dialog#player { border: 0; padding: 0; background: #000; width: min(960px, 94vw); max-width: none; }
+dialog#player::backdrop { background: rgba(0,0,0,0.78); }
+dialog#player iframe { width: 100%; aspect-ratio: 16 / 9; max-height: 86vh; border: 0; display: block; background: #000; }
+dialog#player #closeplayer { position: absolute; top: 0; right: 0; z-index: 2; background: #000; color: #fff; border: 0; padding: 8px 14px; font: inherit; font-size: 0.8rem; letter-spacing: 0.08em; cursor: pointer; }
+</style>
+
+<div class="bar">
+  <div class="wrap">
+    <img class="mark logo" src="assets/9ed9659be9.png" alt="" width="30" height="34">
+    <a class="name" href="#top" aria-label="VOX AMICIS"><img class="logo word" src="assets/40be6aae5e.png" alt="VOX AMICIS" width="139" height="14"></a>
+    <nav aria-label="Sections">
+      <a href="#concerts"><span class="ko">연주회</span><span class="en">Concerts</span></a>
+      <a href="#listen"><span class="ko">듣고 보기</span><span class="en">Watch &amp; Listen</span></a>
+      <a href="#artists"><span class="ko">아티스트</span><span class="en">Artists</span></a>
+      <a href="#about"><span class="ko">소개</span><span class="en">About</span></a>
+      <a href="#support"><span class="ko">후원</span><span class="en">Support</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="btn-ko" aria-pressed="true">한국어</button>
+      <button type="button" id="btn-en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="top">
+  <main>
+    <div class="hero">
+      <div class="herobg" aria-hidden="true"><video muted playsinline preload="auto" disablepictureinpicture tabindex="-1"></video></div>
+      <img class="logo" src="assets/99385fce6f.png" alt="VOX AMICIS" width="900" height="939">
+      <div>
+        <div class="cap"><span class="ko">서울, 뉴욕 · 전문 보컬 앙상블 · 2018년 창단</span><span class="en">Seoul and New York · Professional vocal ensemble · Founded 2018</span></div>
+        <h1><span class="ko">벗들의 목소리</span><span class="en">Voices of friends.</span></h1>
+        <p class="lede">
+          <span class="ko">서울과 뉴욕에서 활동하는 전문 보컬 앙상블입니다. 르네상스부터 현대까지 폭넓은 합창 레퍼토리를 연주합니다.</span>
+          <span class="en">A professional vocal ensemble based in Seoul and New York. The repertoire runs from the Renaissance to contemporary music.</span>
+        </p>
+        <div class="status">
+          <a href="#concerts"><span class="cap"><span class="ko">최근 연주회</span><span class="en">Latest concert</span></span><span>제4회 마주보는 울림 · 2026.06.25</span><span class="arrow">&rarr;</span></a>
+          <a href="https://forms.gle/DGa46FJf5jCQHYaQA" target="_blank" rel="noopener"><span class="cap"><span class="ko">다음 연주회</span><span class="en">Next concert</span></span><span><span class="ko">미정. 소식 신청하기</span><span class="en">To be announced. Join the news list</span></span><span class="arrow">&nearr;</span></a>
+          <a href="https://www.instagram.com/vox_amicis/" target="_blank" rel="noopener"><span class="cap">Instagram</span><span>@vox_amicis</span><span class="arrow">&nearr;</span></a>
+        </div>
+      </div>
+    </div>
+
+    
+    <section id="concerts">
+      <div class="head">
+        <h2><span class="ko">연주회</span><span class="en">Concerts</span></h2>
+      </div>
+
+      <h3 class="sub cap"><span class="ko">예정된 연주회</span><span class="en">Upcoming</span></h3>
+      <div class="empty">
+        <p><span class="ko">현재 공지된 연주회가 없습니다.</span><span class="en">No concerts are announced at the moment.</span></p>
+        <a href="https://forms.gle/DGa46FJf5jCQHYaQA" target="_blank" rel="noopener"><span class="ko">소식 신청 &nearr;</span><span class="en">Join the news list &nearr;</span></a>
+      </div>
+
+      <h3 class="sub cap"><span class="ko">지난 연주회</span><span class="en">Past concerts</span></h3>
+
+      <article class="event">
+        <div class="date"><span class="day">25</span><span class="cap my"><span class="ko">2026.06</span><span class="en">Jun 2026</span></span></div>
+        <div>
+          <p class="cap muted ordinal"><span class="ko">네 번째 이야기</span><span class="en">The fourth story</span></p>
+          <h3>마주보는 울림 <span class="en">· Resonance in Dialogue</span></h3>
+          <p class="meta"><span class="ko">2026년 6월 25일 목요일 저녁 8시 · 대한성공회 서울주교좌성당</span><span class="en">Thursday, June 25, 2026, 8:00 PM · Seoul Anglican Cathedral</span></p>
+          <p class="about"><span class="ko">복합창 작품을 중심으로 구성한 연주회. 두 합창단이 마주 보고 노래했습니다.</span><span class="en">A concert built around polychoral works, with two choirs singing face to face.</span></p>
+          <p class="meta"><span class="ko">음악감독 및 지휘 이신행 · 객원지휘 전은배 · 피아노 양찬영</span><span class="en">Music director and conductor Sinhaeng Lee · Guest conductor Eunbae Jeon · Piano Chanyoung Yang</span></p>
+<div class="media"><figure class="wide"><img src="assets/f252e259af.jpg" alt="VOX AMICIS singers and conductor posed before the altar mosaic, 2026" width="1200" height="800"><figcaption><span class="ko">VOX AMICIS, 2026</span><span class="en">VOX AMICIS, 2026</span></figcaption></figure></div>
+<div class="clips"><figure class="clip"><video muted playsinline preload="metadata" width="854" height="450" poster="assets/c41147f65a.jpg" src="assets/86a2dfe130.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure><figure class="clip"><video muted playsinline preload="metadata" width="854" height="452" poster="assets/c176648e96.jpg" src="assets/1011cc5049.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure><figure class="clip"><video muted playsinline preload="metadata" width="854" height="450" poster="assets/71fac4dc82.jpg" src="assets/3f075a47e2.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure></div>
+<div class="roster"><p class="cap"><span class="ko">참여 아티스트</span><span class="en">Participating artists</span></p><ul class="names3"><li>이신행<small>음악감독·지휘</small></li><li>강은총</li><li>김동호</li><li>김명준</li><li>김수민</li><li>김시온</li><li>백인재</li><li>신지원</li><li>안하영</li><li>안형준</li><li>양성열</li><li>양현주</li><li>이미선</li><li>이하형</li><li>이호영</li><li>전은배<small>객원 지휘</small></li><li>조한을</li><li>최승주</li><li>한하영</li><li>강은재</li><li>김은주</li><li>김정민</li><li>김정우</li><li>김지윤</li><li>문지용</li><li>박건웅</li><li>박인규</li><li>박혜진</li><li>설수인</li><li>안유빈</li><li>유정민</li><li>이나영</li><li>진수빈</li><li>양찬영<small>피아노</small></li></ul></div>
+<div class="yt"><p class="cap"><span class="ko">YouTube에서 보기</span><span class="en">Watch on YouTube</span></p><ul><li><a href="https://www.youtube.com/watch?v=hTT4dVnTT4I" target="_blank" rel="noopener"><span>Brent: Peace Song</span><span class="dur">4:42</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=WXBeGLNR4o8" target="_blank" rel="noopener"><span>Rheinberger: Abendlied</span><span class="dur">3:07</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=w73GkJ3XHIc" target="_blank" rel="noopener"><span>Mendelssohn: Heilig</span><span class="dur">1:45</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=9bx9ZFKkS7k" target="_blank" rel="noopener"><span>Tate: Ready for Joy</span><span class="dur">4:50</span><span class="pl">&#9654;</span></a></li></ul></div>
+          <details open>
+            <summary><span class="ko">연주곡</span><span class="en">Program</span></summary>
+            <ul class="program">
+              <li class="part">Part I</li>
+              <li><b>Reena Esmail</b> <i>Take What You Need</i></li>
+              <li><b>Felix Mendelssohn Bartholdy</b> <i>Heilig, WoO 27</i></li>
+              <li><b>Tom&aacute;s Luis de Victoria</b> <i>Kyrie</i> from <i>Missa Salve Regina</i></li>
+              <li><b>U&#291;is Prauli&#326;&scaron;</b> <i>Laudibus in Sanctis</i></li>
+              <li><b>Jonathan Dove</b> <i>Adieu! Farewell Earth's Bliss!</i>; <i>Ring Out, Wild Bells</i>, from <i>The Passing of the Year</i><small><span class="ko">전은배(지휘), 양찬영(반주)</span><span class="en">Eunbae Jeon, conductor · Chanyoung Yang, collaborative accompanist</span></small></li>
+              <li class="part"><span class="ko">휴식</span><span class="en">Intermission</span></li>
+              <li class="part">Part II</li>
+              <li><b>Paul Crabtree</b> <i>Death and Resurrection</i> from <i>The Valley of Delight</i></li>
+              <li><b>Josef Gabriel Rheinberger</b> <i>Abendlied</i>, Op. 69, No. 3</li>
+              <li><b>Rheinberger</b> <i>Messe in Es</i>, Op. 109, "Cantus Missae"<small>Kyrie · Gloria · Credo · Sanctus · Benedictus · Agnus Dei</small></li>
+              <li><b>Tim Brent</b> <i>Peace Song (Beatitudes)</i><small><span class="ko">박윤호(젬베), 한하영, 진수빈, 강은총, 김동호, 안형준(5중창)</span><span class="en">Yunho Park, djembe · Quintet: Hayoung Han, Subin Jin, Eunchong Kang, Dongho Kim, Hyungjun Ahn</span></small></li>
+              <li class="part"><span class="ko">앙코르</span><span class="en">Encore</span></li>
+              <li><b>Tate</b> <i>Ready for Joy</i></li>
+            </ul>
+          </details>
+          <p class="credits"><span class="ko">주최 VOX AMICIS · 후원 Colgate University. 본 공연은 Colgate University Research Council, Faculty Development Council Major Grant, Arts and Humanities Division Grant의 지원으로 제작되었습니다.</span><span class="en">Presented by VOX AMICIS, supported by Colgate University. Produced with grants from the Colgate University Research Council, the Faculty Development Council Major Grant, and the Arts and Humanities Division Grant.</span></p>
+        </div>
+        <div class="side"><a href="https://www.artinfokorea.com/performances/28824" target="_blank" rel="noopener"><span class="ko">공연 정보</span><span class="en">Event listing</span> &nearr;</a></div>
+      </article>
+
+      <article class="event">
+        <div class="date"><span class="day">11</span><span class="cap my"><span class="ko">2025.06</span><span class="en">Jun 2025</span></span></div>
+        <div>
+          <p class="cap muted ordinal"><span class="ko">세 번째 이야기</span><span class="en">The third story</span></p>
+          <h3>평안과 평화 <span class="en">· Peace and Rest</span></h3>
+          <p class="meta"><span class="ko">2025년 6월 11일 수요일 저녁 7시 30분 · 대한성공회 서울주교좌성당</span><span class="en">Wednesday, June 11, 2025, 7:30 PM · Seoul Anglican Cathedral</span></p>
+          <p class="about"><span class="ko">영미 합창곡 13곡으로 구성한 연주회. 주제는 내면의 평안과 공동체의 평화입니다.</span><span class="en">A concert of thirteen English and American choral works on inner peace and peace within a community.</span></p>
+          <p class="meta"><span class="ko">지휘 이신행 · 합창 20명</span><span class="en">Conductor Sinhaeng Lee · Twenty singers</span></p>
+<div class="media"><figure class="wide"><img src="assets/77d58a5b8a.jpg" alt="VOX AMICIS singing in Seoul Anglican Cathedral before a full audience" width="1200" height="900"><figcaption><span class="ko">평안과 평화, 2025.06.11</span><span class="en">Peace and Rest, June 11, 2025</span></figcaption></figure><figure class="wide"><img src="assets/be6cff9726.jpg" alt="VOX AMICIS singers in black outside a brick arcade" width="1440" height="572"><figcaption><span class="ko">VOX AMICIS, 2025</span><span class="en">VOX AMICIS, 2025</span></figcaption></figure></div>
+<div class="clips"><figure class="clip"><video muted playsinline preload="metadata" width="854" height="502" poster="assets/44ca2953c4.jpg" src="assets/b5d49faaef.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure><figure class="clip"><video muted playsinline preload="metadata" width="854" height="502" poster="assets/d86b53e060.jpg" src="assets/8ec77a1e29.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure></div>
+<div class="roster"><p class="cap"><span class="ko">참여 아티스트</span><span class="en">Participating artists</span></p><ul class="names3"><li>이신행<small>지휘</small></li><li>강은총</li><li>김건</li><li>김규민</li><li>김명준</li><li>김수민</li><li>김시온</li><li>신지원</li><li>방성현</li><li>백인재</li><li>김지원</li><li>전은배</li><li>양현주</li><li>오승근</li><li>이현섭</li><li>이호영</li><li>안하영</li><li>조원주</li><li>최하은</li><li>차정은</li><li>조한을</li><li>김이삭<small>바리톤 솔로</small></li></ul></div>
+          <div class="yt"><p class="cap"><span class="ko">YouTube에서 보기</span><span class="en">Watch on YouTube</span></p><ul><li><a href="https://www.youtube.com/watch?v=iUsCBrUots4" target="_blank" rel="noopener"><span>Tavener: Song for Athene</span><span class="dur">5:51</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=0ONixXmcfAs" target="_blank" rel="noopener"><span>Barber: The Coolin</span><span class="dur">3:25</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=ecfXXOzl1cQ" target="_blank" rel="noopener"><span>Forrest: Good Night, Dear Heart</span><span class="dur">4:19</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=7jowtemFh08" target="_blank" rel="noopener"><span>DiOrio: I Am</span><span class="dur">5:28</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=d5hMeQafIsE" target="_blank" rel="noopener"><span>Macdonald: When the Earth Stands Still</span><span class="dur">3:31</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=YvvQWJC93Ns" target="_blank" rel="noopener"><span>Forrest: Entreat Me Not to Leave You</span><span class="dur">7:14</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=yXVLCWKbCtI" target="_blank" rel="noopener"><span>Precious Lord, Take My Hand</span><span class="dur">2:52</span><span class="pl">&#9654;</span></a></li></ul></div>
+<details>
+            <summary><span class="ko">연주곡</span><span class="en">Program</span></summary>
+            <ul class="program">
+              <li><b>John Tavener</b> <i>Song for Athene</i></li>
+              <li><b>Gordon Langford</b> <i>The Oak and the Ash</i></li>
+              <li><b>Samuel Barber</b> <i>The Coolin</i></li>
+              <li><b>Dan Forrest</b> <i>Good Night, Dear Heart</i></li>
+              <li><b>Frank Ticheli</b> <i>There Will Be Rest</i></li>
+              <li><b>Jonathan Dove</b> <i>In Beauty May I Walk</i></li>
+              <li><b>Nigel Short, Mack Wilberg</b> <i>The Dying Soldier</i><small><span class="ko">바리톤 김이삭</span><span class="en">Baritone solo, Isaac Kim</span></small></li>
+              <li><b>Don Macdonald</b> <i>When the Earth Stands Still</i></li>
+              <li><b>Kim Andr&eacute; Arnesen</b> <i>Even When He Is Silent</i></li>
+              <li><b>Dominic DiOrio</b> <i>I Am</i></li>
+              <li><b>Dan Forrest</b> <i>Entreat Me Not to Leave You</i></li>
+              <li><b>Thomas A. Dorsey</b> <i>Precious Lord, Take My Hand</i></li>
+              <li><b>Jacob Collier</b> <i>World O World</i></li>
+            </ul>
+          </details>
+        </div>
+        <div class="side"></div>
+      </article>
+
+      <article class="event">
+        <div class="date"><span class="day">25</span><span class="cap my"><span class="ko">2022.11</span><span class="en">Nov 2022</span></span></div>
+        <div>
+          <p class="cap muted ordinal"><span class="ko">두 번째 이야기</span><span class="en">The second story</span></p>
+          <h3>World Without End</h3>
+          <p class="meta"><span class="ko">2022년 11월 25일 · 영산아트홀, 서울 · 오후 7시 30분</span><span class="en">November 25, 2022 · Youngsan Art Hall, Seoul · 7:30 PM</span></p>
+          <p class="about"><span class="ko">일상에 대한 감사를 주제로 한 연주회.</span><span class="en">A concert on the theme of gratitude for everyday life.</span></p>
+          <p class="meta"><span class="ko">지휘 이신행 · 오르간 구민아 · 합창 19명</span><span class="en">Conductor Sinhaeng Lee · Organ 구민아 · Nineteen singers</span></p>
+          <div class="media"><figure class="wide"><img src="assets/31f65ef412.jpg" alt="VOX AMICIS singers posing together backstage, 2022" width="1200" height="795"><figcaption><span class="ko">VOX AMICIS, 2022</span><span class="en">VOX AMICIS, 2022</span></figcaption></figure></div>
+<div class="clips"><figure class="clip"><video muted playsinline preload="metadata" width="854" height="480" poster="assets/fa3999d04f.jpg" src="assets/3d67512089.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure><figure class="clip"><video muted playsinline preload="metadata" width="854" height="480" poster="assets/7bf37aec90.jpg" src="assets/25a0497c99.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure></div>
+<div class="roster"><p class="cap"><span class="ko">참여 아티스트</span><span class="en">Participating artists</span></p><ul class="names3"><li>이신행<small>지휘</small></li><li>김규민</li><li>김명준</li><li>김요섭</li><li>김우진</li><li>김윤희</li><li>류신기</li><li>박강노</li><li>박수현</li><li>박선정</li><li>방성현</li><li>백인재</li><li>서재혁</li><li>오승근</li><li>이나윤</li><li>이믿음</li><li>정혜진</li><li>조원주</li><li>차정은</li><li>한하영</li><li>구민아<small>오르간</small></li></ul></div>
+
+          <div class="yt"><p class="cap"><span class="ko">YouTube에서 보기</span><span class="en">Watch on YouTube</span></p><ul><li><a href="https://www.youtube.com/watch?v=3E7MXZn8EaY" target="_blank" rel="noopener"><span>Ticheli: Earth Song</span><span class="dur">3:22</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=Bnwvh_46R10" target="_blank" rel="noopener"><span>Dove: Seek Him that Maketh the Seven Stars</span><span class="dur">5:52</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=b8SrFfP-WeM" target="_blank" rel="noopener"><span>Paulus: The Road Home</span><span class="dur">3:23</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=k9o4N3ahLho" target="_blank" rel="noopener"><span>Martin: Anthem of Dedication</span><span class="dur">8:54</span><span class="pl">&#9654;</span></a></li></ul></div>
+<details>
+            <summary><span class="ko">연주곡</span><span class="en">Program</span></summary>
+            <ul class="program">
+              <li class="part">I</li>
+              <li><b>William Byrd</b> <i><span class="ko">주여 우리를 불쌍히 여기소서</span><span class="en">Kyrie, from the Mass for Five Voices</span></i></li>
+              <li><b>Roxanna Panufnik</b> <i><span class="ko">주여 우리를 불쌍히 여기소서, 버드 풍으로</span><span class="en">Kyrie, in the manner of Byrd</span></i></li>
+              <li><b>William Byrd</b> <i><span class="ko">거룩한 성체</span><span class="en">Ave verum corpus</span></i></li>
+              <li><b>Roderick Williams</b> <i><span class="ko">새로이 상상한 거룩한 성체</span><span class="en">Ave verum corpus, newly imagined</span></i></li>
+              <li class="part">II</li>
+              <li><b>Frank Ticheli</b> <i><span class="ko">대지의 노래</span><span class="en">Earth Song</span></i></li>
+              <li><b>James MacMillan</b> <i><span class="ko">찬란한 새벽</span><span class="en">O Radiant Dawn</span></i></li>
+              <li><b>Stephen Pilkington</b> <i>정처없이 헤매이며</i></li>
+              <li><b>William Harris</b> <i><span class="ko">주의 전에 들이소서</span><span class="en">Bring Us, O Lord God</span></i></li>
+              <li class="part">III</li>
+              <li><b>Jong Yeoul Chong</b> <i><span class="ko">나는 생각하기를,</span><span class="en">I Many Times Thought</span></i></li>
+              <li><b>Stephen Paulus</b> <i><span class="ko">집으로 가는 길</span><span class="en">The Road Home</span></i></li>
+              <li><b>Jong Yeoul Chong</b> <i><span class="ko">아리랑</span><span class="en">Arirang</span></i></li>
+              <li class="part">IV</li>
+              <li><b>Jonathan Dove</b> <i><span class="ko">별을 만드신 이를 찾으라</span><span class="en">Seek Him That Maketh the Seven Stars</span></i></li>
+              <li><b>Lukas Foss</b> <i><span class="ko">보라, 내가 성전을 세웠도다</span><span class="en">Behold! I Build an House</span></i></li>
+              <li><b>Warren Martin</b> <i><span class="ko">헌정의 송가</span><span class="en">Dedication Anthem</span></i></li>
+            </ul>
+          </details>
+        </div>
+        <div class="side"><a href="http://www.youngsanarthall.com/rb/?m=schedulearthall&amp;front=view&amp;no=8028" target="_blank" rel="noopener"><span class="ko">공연 정보</span><span class="en">Event listing</span> &nearr;</a></div>
+      </article>
+
+      <article class="event">
+        <div class="date"><span class="day">07</span><span class="cap my"><span class="ko">2018.07</span><span class="en">Jul 2018</span></span></div>
+        <div>
+          <p class="cap muted ordinal"><span class="ko">첫 번째 이야기</span><span class="en">The first story</span></p>
+          <h3>벗들의 목소리 <span class="en">· Voices of Friends</span></h3>
+          <p class="meta"><span class="ko">2018년 7월 7일 · 오디오가이 스튜디오, 서울 · 오후 7시</span><span class="en">July 7, 2018 · Audioguy Studio, Seoul · 7:00 PM</span></p>
+          <p class="meta"><span class="ko">지휘 이신행</span><span class="en">Conductor Sinhaeng Lee</span></p>
+<div class="media"><figure class="wide"><img src="assets/034a7d1d7a.jpg" alt="VOX AMICIS singers gathered around a table, 2018" width="1500" height="531"><figcaption><span class="ko">VOX AMICIS, 2018</span><span class="en">VOX AMICIS, 2018</span></figcaption></figure></div>
+<div class="clips"><figure class="clip"><video muted playsinline preload="metadata" width="540" height="540" poster="assets/a97f6de74d.jpg" src="assets/f912607a99.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure><figure class="clip"><video muted playsinline preload="metadata" width="640" height="360" poster="assets/8db4bb3cdb.jpg" src="assets/15cef976c6.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure><figure class="clip"><video muted playsinline preload="metadata" width="640" height="360" poster="assets/165977b73d.jpg" src="assets/5bea2ea997.mp4"></video><button type="button" class="playbtn"><span class="ko">눌러서 듣기</span><span class="en">Tap to listen</span></button></figure></div>
+<div class="roster"><p class="cap"><span class="ko">참여 아티스트</span><span class="en">Participating artists</span></p><ul class="names3"><li>이신행<small>지휘</small></li><li>C Han</li><li>차정은</li><li>강지나</li><li>한하영</li><li>박은채</li><li>김태희</li><li>유예진</li><li>권용범</li><li>김현승</li><li>손희진</li><li>김원빈</li><li>김규민</li><li>이민준</li><li>이나윤</li><li>서재혁</li><li>조한을</li><li>전은배</li><li>박수현</li></ul></div>
+          <div class="yt"><p class="cap"><span class="ko">YouTube에서 보기</span><span class="en">Watch on YouTube</span></p><ul><li><a href="https://www.youtube.com/watch?v=O2LBT7mJb8I" target="_blank" rel="noopener"><span>MacMillan: O Radiant Dawn</span><span class="dur">4:15</span><span class="pl">&#9654;</span></a></li><li><a href="https://www.youtube.com/watch?v=fvxrA2za620" target="_blank" rel="noopener"><span>Thompson: Alleluia</span><span class="dur">5:00</span><span class="pl">&#9654;</span></a></li></ul></div>
+<details>
+            <summary><span class="ko">연주곡</span><span class="en">Program</span></summary>
+            <ul class="program">
+              <li class="part">I</li>
+              <li><b>James MacMillan</b> <i>O Radiant Dawn</i></li>
+              <li class="part">II</li>
+              <li><b>U&#291;is Prauli&#326;&scaron;</b> <i>Missa Rigensis</i><small>Kyrie eleison · Gloria</small></li>
+              <li><b>Randall Thompson</b> <i>Alleluia</i></li>
+              <li class="part">III</li>
+              <li><b>Jake Runestad</b> <i>Let My Love Be Heard</i></li>
+              <li><b>Prauli&#326;&scaron;</b> <i>Missa Rigensis</i><small>Sanctus · Agnus Dei</small></li>
+              <li><b>Ola Gjeilo</b> <i>Unicornis Captivatur</i></li>
+            </ul>
+          </details>
+        </div>
+        <div class="side"></div>
+      </article>
+    </section>
+
+    <section id="listen">
+      <div class="head">
+        <h2><span class="ko">듣고 보기</span><span class="en">Watch &amp; Listen</span></h2>
+      </div>
+      <div class="tiles">
+        <article class="tile solid">
+          <div>
+            <p class="cap"><span class="ko">음반 · 2025.05.02</span><span class="en">Album · May 2, 2025</span></p>
+            <h3>Jong Yeoul Chong: Choral Works</h3>
+            <p><span class="ko">이신행 지휘, VOX AMICIS. 한 곡에서 Sungu Kang이 피아노를 연주했습니다. 6트랙, 약 22분. Mark Records 57564-MCD.</span><span class="en">Conducted by Sinhaeng Lee, with Sungu Kang at the piano on one track. Six tracks, about 22 minutes. Mark Records 57564-MCD.</span></p>
+          </div>
+          <ul>
+            <li><a href="https://open.spotify.com/album/1QDdsgooqhcs4J4yxs31b9" target="_blank" rel="noopener">Spotify</a></li>
+            <li><a href="https://music.apple.com/us/album/jong-yeoul-chong-choral-works-ep/1826728757" target="_blank" rel="noopener">Apple Music</a></li>
+            <li><a href="https://www.prestomusic.com/classical/products/9774390--choral-works-by-jong-yeoul-chong" target="_blank" rel="noopener">Presto Music</a></li>
+          </ul>
+        </article>
+        <article class="tile">
+          <div>
+            <p class="cap"><span class="ko">영상</span><span class="en">Video</span></p>
+            <h3>YouTube</h3>
+            <p><span class="ko">VOX AMICIS 공연 영상.</span><span class="en">Performance videos of VOX AMICIS.</span></p>
+          </div>
+          <ul><li><a href="https://www.youtube.com/@leesinhaeng/videos" target="_blank" rel="noopener"><span class="ko">영상 보기</span><span class="en">Watch</span> &nearr;</a></li></ul>
+        </article>
+        <article class="tile">
+          <div>
+            <p class="cap"><span class="ko">소식</span><span class="en">News</span></p>
+            <h3>Instagram</h3>
+            <p><span class="ko">연주회 소식과 리허설 현장.</span><span class="en">Concert news and rehearsal moments.</span></p>
+          </div>
+          <ul><li><a href="https://www.instagram.com/vox_amicis/" target="_blank" rel="noopener">@vox_amicis &nearr;</a></li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="artists">
+      <div class="head">
+        <h2><span class="ko">아티스트</span><span class="en">Artists</span></h2>
+      </div>
+<div class="grp"><p class="cap"><span class="ko">음악감독 및 지휘</span><span class="en">Music director and conductor</span></p><ul class="names2"><li><button type="button" class="nm" data-i="52">이신행</button></li></ul></div><div class="grp"><p class="cap"><span class="ko">객원 아티스트</span><span class="en">Guest artists</span></p><ul class="names2"><li><button type="button" class="nm" data-i="3">구민아</button></li><li><button type="button" class="nm" data-i="16">김이삭</button></li><li><button type="button" class="nm" data-i="42">양찬영</button></li><li><button type="button" class="nm" data-i="56">전은배</button></li></ul></div><div class="grp"><p class="cap"><span class="ko">단원</span><span class="en">Singers</span></p><ul class="names2"><li><button type="button" class="nm" data-i="0">강은재</button></li><li><button type="button" class="nm" data-i="1">강은총</button></li><li><button type="button" class="nm" data-i="2">강지나</button></li><li><button type="button" class="nm" data-i="4">권용범</button></li><li><button type="button" class="nm" data-i="5">김건</button></li><li><button type="button" class="nm" data-i="6">김규민</button></li><li><button type="button" class="nm" data-i="7">김동호</button></li><li><button type="button" class="nm" data-i="8">김명준</button></li><li><button type="button" class="nm" data-i="9">김수민</button></li><li><button type="button" class="nm" data-i="10">김시온</button></li><li><button type="button" class="nm" data-i="11">김요섭</button></li><li><button type="button" class="nm" data-i="12">김우진</button></li><li><button type="button" class="nm" data-i="13">김원빈</button></li><li><button type="button" class="nm" data-i="14">김윤희</button></li><li><button type="button" class="nm" data-i="15">김은주</button></li><li><button type="button" class="nm" data-i="17">김정민</button></li><li><button type="button" class="nm" data-i="18">김정우</button></li><li><button type="button" class="nm" data-i="19">김지원</button></li><li><button type="button" class="nm" data-i="20">김지윤</button></li><li><button type="button" class="nm" data-i="21">김태희</button></li><li><button type="button" class="nm" data-i="22">김현승</button></li><li><button type="button" class="nm" data-i="23">류신기</button></li><li><button type="button" class="nm" data-i="24">문지용</button></li><li><button type="button" class="nm" data-i="25">박강노</button></li><li><button type="button" class="nm" data-i="26">박건웅</button></li><li><button type="button" class="nm" data-i="27">박선정</button></li><li><button type="button" class="nm" data-i="28">박수현</button></li><li><button type="button" class="nm" data-i="29">박은채</button></li><li><button type="button" class="nm" data-i="30">박인규</button></li><li><button type="button" class="nm" data-i="31">박혜진</button></li><li><button type="button" class="nm" data-i="32">방성현</button></li><li><button type="button" class="nm" data-i="33">백인재</button></li><li><button type="button" class="nm" data-i="34">서재혁</button></li><li><button type="button" class="nm" data-i="35">설수인</button></li><li><button type="button" class="nm" data-i="36">손희진</button></li><li><button type="button" class="nm" data-i="37">신지원</button></li><li><button type="button" class="nm" data-i="38">안유빈</button></li><li><button type="button" class="nm" data-i="39">안하영</button></li><li><button type="button" class="nm" data-i="40">안형준</button></li><li><button type="button" class="nm" data-i="41">양성열</button></li><li><button type="button" class="nm" data-i="43">양현주</button></li><li><button type="button" class="nm" data-i="44">오승근</button></li><li><button type="button" class="nm" data-i="45">유예진</button></li><li><button type="button" class="nm" data-i="46">유정민</button></li><li><button type="button" class="nm" data-i="47">이나영</button></li><li><button type="button" class="nm" data-i="48">이나윤</button></li><li><button type="button" class="nm" data-i="49">이미선</button></li><li><button type="button" class="nm" data-i="50">이민준</button></li><li><button type="button" class="nm" data-i="51">이믿음</button></li><li><button type="button" class="nm" data-i="53">이하형</button></li><li><button type="button" class="nm" data-i="54">이현섭</button></li><li><button type="button" class="nm" data-i="55">이호영</button></li><li><button type="button" class="nm" data-i="57">정혜진</button></li><li><button type="button" class="nm" data-i="58">조원주</button></li><li><button type="button" class="nm" data-i="59">조한을</button></li><li><button type="button" class="nm" data-i="60">진수빈</button></li><li><button type="button" class="nm" data-i="61">차정은</button></li><li><button type="button" class="nm" data-i="62">최승주</button></li><li><button type="button" class="nm" data-i="63">최하은</button></li><li><button type="button" class="nm" data-i="64">한하영</button></li><li><button type="button" class="nm" data-i="65">C Han</button></li></ul></div>
+      <p class="note"><span class="ko">프로필은 각 연주회 프로그램북에 실린 내용이며, 가장 최근에 참여한 연도 기준입니다. 이신행의 프로필만 2026년 11월에 본인 확인 정보로 갱신했습니다. 나머지 아티스트는 인터넷 검색으로 동일인을 확인하지 못해 프로그램북 내용 그대로입니다.</span><span class="en">Profiles are taken from the concert programs, as of each artist's most recent concert. Only Sinhaeng Lee's profile was updated in November 2026, from information he confirmed; other artists remain as printed, since web searches could not reliably identify them. Korean only.</span> <a href="https://sinhaenglee.com/" target="_blank" rel="noopener">sinhaenglee.com &nearr;</a></p>
+    </section>
+
+    <section id="about">
+      <div class="head"><h2><span class="ko">소개</span><span class="en">About</span></h2></div>
+      <div class="about-grid">
+        <div>
+          <p><span class="ko">VOX AMICIS는 2018년에 창단한 전문 보컬 앙상블입니다. 이름은 라틴어로 "벗들의 목소리"를 뜻합니다.</span><span class="en">VOX AMICIS is a professional vocal ensemble founded in 2018. The name is Latin for "voices of friends."</span></p>
+          <p><span class="ko">단원들은 국내외에서 전문 교육을 받았으며, 르네상스부터 21세기 초연 작품까지 연주합니다.</span><span class="en">The singers are trained in Korea and abroad. The repertoire runs from the Renaissance to 21st-century premieres.</span></p>
+        </div>
+        <dl>
+          <div><dt><span class="ko">창단</span><span class="en">Founded</span></dt><dd><span class="ko">2018년, 서울</span><span class="en">2018, Seoul</span></dd></div>
+          <div><dt><span class="ko">예술감독</span><span class="en">Director</span></dt><dd><span class="ko">이신행</span><span class="en">Sinhaeng Lee</span></dd></div>
+          <div><dt><span class="ko">레퍼토리</span><span class="en">Repertoire</span></dt><dd><span class="ko">르네상스부터 오늘의 음악까지</span><span class="en">Renaissance to today</span></dd></div>
+          <div><dt><span class="ko">기록</span><span class="en">To date</span></dt><dd><span class="ko">연주회 4회, 음반 1장</span><span class="en">Four concerts, one album</span></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="support" class="support">
+      <div class="inner">
+        <div>
+          <p class="cap"><span class="ko">후원</span><span class="en">Support</span></p>
+          <h2><span class="ko">함께 만드는 다음 울림</span><span class="en">The next resonance, together</span></h2>
+          <p><span class="ko">후원과 협업 제안을 받습니다. 후원은 공연 제작과 청년 음악가의 무대 확대에 사용됩니다.</span><span class="en">We welcome support and collaboration. Support goes toward concert production and more stages for young musicians.</span></p>
+        </div>
+        <div class="btns">
+          <a class="btn" href="https://forms.gle/DGa46FJf5jCQHYaQA" target="_blank" rel="noopener"><span><span class="ko">소식 신청</span><span class="en">Join the news list</span></span><span>&nearr;</span></a>
+        </div>
+      </div>
+      <form class="contact" id="contact-form" novalidate>
+        <p class="cap"><span class="ko">후원 및 협업 문의</span><span class="en">Support and collaboration inquiries</span></p>
+        <div class="row2">
+          <label><span class="lb"><span class="ko">이름</span><span class="en">Name</span></span><input type="text" name="name" autocomplete="name" required></label>
+          <label><span class="lb"><span class="ko">이메일</span><span class="en">Your email</span></span><input type="email" name="email" autocomplete="email" required></label>
+        </div>
+        <label><span class="lb"><span class="ko">제목</span><span class="en">Subject</span></span><input type="text" name="subject" required></label>
+        <label><span class="lb"><span class="ko">내용</span><span class="en">Message</span></span><textarea name="message" rows="6" required></textarea></label>
+        <div class="send"><button type="submit"><span class="ko">보내기</span><span class="en">Send</span></button><span class="msg" id="contact-msg" role="status"></span></div>
+      </form>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="cols">
+      <div>
+        <img class="logo" src="assets/99385fce6f.png" alt="VOX AMICIS" width="150" height="157">
+      </div>
+      <div>
+        <p class="cap"><span class="ko">페이지</span><span class="en">Pages</span></p>
+        <ul>
+          <li><a href="#concerts"><span class="ko">연주회</span><span class="en">Concerts</span></a></li>
+          <li><a href="#listen"><span class="ko">듣고 보기</span><span class="en">Watch &amp; Listen</span></a></li>
+          <li><a href="#artists"><span class="ko">아티스트</span><span class="en">Artists</span></a></li>
+          <li><a href="#about"><span class="ko">소개</span><span class="en">About</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="cap"><span class="ko">팔로우</span><span class="en">Follow</span></p>
+        <ul>
+          <li><a href="https://www.instagram.com/vox_amicis/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.youtube.com/@leesinhaeng/videos" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="https://open.spotify.com/album/1QDdsgooqhcs4J4yxs31b9" target="_blank" rel="noopener">Spotify</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="cap"><span class="ko">문의</span><span class="en">Inquiries</span></p>
+        <ul>
+          <li><a href="https://forms.gle/DGa46FJf5jCQHYaQA" target="_blank" rel="noopener"><span class="ko">소식 신청</span><span class="en">Join the news list</span></a></li>
+          <li><a href="https://sinhaenglee.com/" target="_blank" rel="noopener"><span class="ko">예술감독 웹사이트</span><span class="en">Artistic director's website</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>&copy; 2026 VOX AMICIS</span>
+      <span><span class="ko">서울 · 2018년 창단</span><span class="en">Seoul · Founded 2018</span></span>
+    </div>
+  </footer>
+</div>
+
+<div id="pop" role="tooltip" hidden></div>
+<script type="application/json" id="people">[{"name": "강은재", "part": "Choir 2 Tenor", "years": [2026], "src": 2026, "bio": ["서울예술고등학교 졸업", "서울대학교 음악대학 성악과 우등 졸업", "서울대학교 음악대학 성악과 석사과정 재학"], "group": "s"}, {"name": "강은총", "part": "Choir 2 Alto", "years": [2025, 2026], "src": 2026, "bio": ["이화여자대학교 성악과 졸업", "Mannes School of Music 석사 졸업", "Louisiana State University 박사 졸업", "현) 국립오페라단 청년단원"], "group": "s"}, {"name": "강지나", "part": "소프라노", "years": [2018], "src": 2018, "bio": ["연세대학교 교회음악과 합창지휘전공 졸업", "동 대학원 석사과정 재학", "오스트리아 Arnold Schönberg Chor 객원 단원"], "group": "s"}, {"name": "구민아", "part": "오르간", "years": [2022], "src": 2022, "bio": ["서울예술고등학교, 연세대학교 졸업", "슈투트가르트 국립음대 마스터", "자브뤼켄 국립음대 콘체르트 엑자멘 최우수 졸업", "현) 서울예고, 인천예고, 계원예고 출강"], "group": "x"}, {"name": "권용범", "part": "카운터테너", "years": [2018], "src": 2018, "bio": ["장로회신학대학교 차석 입학, 전 학기 장학금, 조기 졸업", "Handel <Messiah>, Vivaldi <Gloria> 등 솔리스트", "Seoul Oratorio Festival 알토 솔리스트", "현) 한국 카운터테너 앙상블 협회 솔리스트 및 단원", "Bach Solisten Seoul 알토 단원 역임"], "group": "s"}, {"name": "김건", "part": "베이스", "years": [2025], "src": 2025, "bio": ["인천예술고등학교 성악과 졸업", "장로회신학대학교 지휘전공 학부 졸업", "한국예술종합학교 전문사과정 재학"], "group": "s"}, {"name": "김규민", "part": "테너", "years": [2018, 2022, 2025], "src": 2025, "bio": ["연세대학교 교회음악과(합창지휘) 졸업", "현) 후암교회 샬롬찬양대 지휘자", "현) 더 싱어즈, 코러스쿰 단원", "전) 한국대학합창단 단원", "전) 영락교회 할렐루야찬양대 부지휘자"], "group": "s"}, {"name": "김동호", "part": "Choir 1 Tenor", "years": [2026], "src": 2026, "bio": ["연세대학교 교회음악과 재학", "현) 선봉대교회 임마누엘찬양대 지휘자"], "group": "s"}, {"name": "김명준", "part": "Choir 1 Bass", "years": [2022, 2025, 2026], "src": 2026, "bio": ["연세대학교 학사(교회음악, 언론홍보영상학) 졸업", "인디애나대학교 석사 졸업 및 박사 재학", "First Christian Church of Bloomington 음악감독", "서울유스콰이어 공동음악감독", "2025 미국대학합창연합(NCCO) 지휘 펠로우 선정"], "group": "s"}, {"name": "김수민", "part": "Choir 2 Soprano", "years": [2025, 2026], "src": 2026, "bio": ["연세대학교 성악과 졸업", "연세대학교 대학원 성악과 석사 졸업", "Indiana University 연주자과정 졸업"], "group": "s"}, {"name": "김시온", "part": "Choir 1 Bass", "years": [2025, 2026], "src": 2026, "bio": ["연세대학교 교회음악과 재학", "전) 임마누엘교회 호산나찬양대 지휘자", "연세대 글리클럽 지휘자", "혜성교회 테너 솔리스트", "현) 선린교회 오케스트라 지휘자"], "group": "s"}, {"name": "김요섭", "part": "", "years": [2022], "src": 2022, "bio": ["연세대학교 교회음악과 합창지휘전공 졸업", "현) 콜레기움보칼레 서울 정단원", "현) 신생중앙교회 임마누엘 찬양대 지휘자"], "group": "s"}, {"name": "김우진", "part": "", "years": [2022], "src": 2022, "bio": ["연세대학교 성악과, 신문방송학과 졸업", "헤이그 왕립음악원 석사 및 최고 연주자과정", "네덜란드 국립 오페라 아카데미 객원 주역", "바흐, 하이든, 슈베르트 교회음악 협연 다수"], "group": "s"}, {"name": "김원빈", "part": "테너", "years": [2018], "src": 2018, "bio": ["포항예술고등학교 성악과, 연세대학교 성악과 졸업", "연세대학교 일반대학원 합창지휘 전공 재학", "연세대 콘서트콰이어 단원"], "group": "s"}, {"name": "김윤희", "part": "", "years": [2022], "src": 2022, "bio": ["연세대학교 교회음악과 합창지휘전공 졸업", "동 대학원 재학"], "group": "s"}, {"name": "김은주", "part": "Choir 2 Alto", "years": [2026], "src": 2026, "bio": ["협성대학교 학사(합창지휘·경영) 졸업", "전) 협성대학교 마스터코랄 부지휘자", "화성시소년소녀합창단 부지휘자", "현) 문콰이어 단원"], "group": "s"}, {"name": "김이삭", "part": "바리톤 · 객원 솔리스트", "years": [2025], "src": 2025, "bio": ["경희대학교 음악대학 졸업", "미국 서던 캘리포니아 대학교 연주자과정 수석 졸업", "보스턴대학교 석사 및 전문연주자과정 졸업 (필리스 커틴상)", "동양인 최초 애틀랜타 오페라 스튜디오 아티스트", "2021 국립오페라단 <오페라 여행> 데뷔", "현) 유럽과 미국 중심 오페라 솔리스트"], "group": "x"}, {"name": "김정민", "part": "Choir 2 Bass", "years": [2026], "src": 2026, "bio": ["장로회신학대학교 교회음악학과 재학", "현) 번동평화교회 성가대원"], "group": "s"}, {"name": "김정우", "part": "Choir 2 Bass", "years": [2026], "src": 2026, "bio": ["장로회신학대학교 오르간 전공 졸업", "장로회신학대학교 합창지휘 전공 석사 과정 재학", "현) 챔버콰이어서울 단원, 바흐솔리스텐서울 단원"], "group": "s"}, {"name": "김지원", "part": "소프라노", "years": [2025], "src": 2025, "bio": ["연세대학교 교회음악과 합창지휘전공 4학년 재학", "현) 남가좌교회 소프라노 솔리스트"], "group": "s"}, {"name": "김지윤", "part": "Choir 1 Soprano", "years": [2026], "src": 2026, "bio": ["장로회신학대학교 교회음악학과 성악전공 졸업", "현) 보라매교회 솔리스트"], "group": "s"}, {"name": "김태희", "part": "메조 소프라노", "years": [2018], "src": 2018, "bio": ["선화예술고등학교 성악전공", "연세대학교 교회음악과 합창지휘전공 4학년 재학", "연세대 콘서트콰이어 유럽 순회연주", "합창, 솔리스트, 지휘자로 활동"], "group": "s"}, {"name": "김현승", "part": "테너", "years": [2018], "src": 2018, "bio": ["연세대학교 교회음악과 합창지휘전공 재학", "연세대 콘서트콰이어 단원, 유럽투어", "현) 파주영광교회 지휘자"], "group": "s"}, {"name": "류신기", "part": "", "years": [2022], "src": 2022, "bio": ["부산예술고등학교 수석 입학 및 졸업", "연세대학교 성악과 졸업", "현) 수원시립합창단 연수단원"], "group": "s"}, {"name": "문지용", "part": "Choir 1 Tenor", "years": [2026], "src": 2026, "bio": ["총신대학교 교회음악과 졸업", "한국예술종합학교 합창지휘과 석사과정 재학", "Seoul Baroque Singers 객원 연주", "현) 고척교회 실로암찬양대 지휘자"], "group": "s"}, {"name": "박강노", "part": "", "years": [2022], "src": 2022, "bio": ["장로회신학대학교 교회음악과 졸업", "Westminster Choir College 성악교수법 석사", "캔자스대학교 성악 박사", "현) 발성법 강의 및 전문 연주자"], "group": "s"}, {"name": "박건웅", "part": "Choir 2 Bass", "years": [2026], "src": 2026, "bio": ["장로회신학대학교 교회음악학과 지휘전공 졸업", "한국예술종합학교 합창지휘과 예술전문사 재학", "BICF 2024 Grand Prix 우승", "2025 젊은 세대를 위한 합창지휘 콩쿠르 1위"], "group": "s"}, {"name": "박선정", "part": "", "years": [2022], "src": 2022, "bio": ["연세대학교 교회음악과 합창지휘전공 졸업", "현) 샹떼자듀, 서울 코랄소사이어티 단원"], "group": "s"}, {"name": "박수현", "part": "", "years": [2018, 2022], "src": 2022, "bio": ["대전예술고등학교 성악전공", "연세대학교 합창지휘전공 재학"], "group": "s"}, {"name": "박은채", "part": "소프라노", "years": [2018], "src": 2018, "bio": ["서울예술고등학교 성악전공", "연세대학교 교회음악과 합창지휘전공 졸업", "연세대 콘서트콰이어 유럽 순회연주", "여러 합창단에서 지휘자 및 단원으로 활동"], "group": "s"}, {"name": "박인규", "part": "Choir 2 Tenor", "years": [2026], "src": 2026, "bio": ["경기예술고등학교 작곡전공 졸업", "한국예술종합학교 합창지휘전공 졸업", "현) 효성중앙교회 지휘자", "깐띠아모 중창단 지휘자", "Indiana University 합창지휘 석사과정 진학 예정"], "group": "s"}, {"name": "박혜진", "part": "Choir 1 Soprano", "years": [2026], "src": 2026, "bio": ["한국예술종합학교 지휘과 합창지휘전공 졸업 및 성악과 부전공 수료", "이화여자대학교 교육대학원 음악교육 석사 졸업", "전) 양주소년소녀합창단 음악감독", "New England Conservatory 합창지휘 석사 재학"], "group": "s"}, {"name": "방성현", "part": "테너", "years": [2022, 2025], "src": 2025, "bio": ["연세대학교 교회음악과 합창지휘전공 졸업", "한국예술종합학교 합창지휘과 전문사 졸업", "현) 구리시립합창단 단원", "현) 바흐솔리스텐서울 콰이어 부지휘자", "현) 연세동문합창단 연세콰이어 지휘자"], "group": "s"}, {"name": "백인재", "part": "Choir 2 Tenor", "years": [2022, 2025, 2026], "src": 2026, "bio": ["연세대학교 학사(성악, 체육교육) 졸업", "전) 대전시립청소년합창단 단원"], "group": "s"}, {"name": "서재혁", "part": "바리톤", "years": [2018, 2022], "src": 2022, "bio": ["연세대학교 교회음악과 합창지휘전공 재학"], "group": "s"}, {"name": "설수인", "part": "Choir 2 Soprano", "years": [2026], "src": 2026, "bio": ["장로회신학대학교 교회음악학과 졸업", "현) 신성교회 솔리스트"], "group": "s"}, {"name": "손희진", "part": "테너", "years": [2018], "src": 2018, "bio": ["연세대학교 성악과 졸업", "현) 전문합창단 샹떼자듀 단원", "성남과 화정의 성당 합창단 지휘"], "group": "s"}, {"name": "신지원", "part": "Choir 1 Alto", "years": [2025, 2026], "src": 2026, "bio": ["연세대학교 작곡과 졸업", "한국예술종합학교 합창지휘전공 졸업", "현) 연세대아브낭뜨 지휘자", "안양예술고등학교 출강"], "group": "s"}, {"name": "안유빈", "part": "Choir 1 Alto", "years": [2026], "src": 2026, "bio": ["중앙대학교 작곡전공 졸업", "연세대학교 대학원 합창지휘전공 졸업예정", "현) 율쳄버콰이어 단원 및 홍보담당"], "group": "s"}, {"name": "안하영", "part": "Choir 1 Soprano", "years": [2025, 2026], "src": 2026, "bio": ["장로회신학대학교 교회음악과 지휘전공 졸업", "한국예술종합학교 합창지휘전공 예술전문사 졸업", "2024 한국합창총연합회 지휘콩쿠르 2위", "University of Louisville 합창지휘 석사 진학 예정"], "group": "s"}, {"name": "안형준", "part": "Choir 1 Bass", "years": [2026], "src": 2026, "bio": ["연세대학교 경영학과 졸업", "현) 코러스쿰 단원", "서울코랄소사이어티 단원", "소노리티 객원 단원"], "group": "s"}, {"name": "양성열", "part": "Choir 1 Alto", "years": [2026], "src": 2026, "bio": ["제2회 대한민국 아마추어 성악 콩쿠르 특별상", "순수 아마추어 협연 콩쿠르 2위", "현) 특수학교 교사", "트리니타스 합창단 단원", "Vox Vocantis 멤버"], "group": "s"}, {"name": "양찬영", "part": "Collaborative Pianist", "years": [2026], "src": 2026, "bio": ["국민대학교 피아노과 수석 졸업", "이스트만 음악대학 피아노 연주 및 문헌 석사 졸업", "이스트만 음악대학 실기장학생 및 Graduate Assistant 역임", "한국·독일 브람스협회 콩쿠르, 음악춘추 콩쿠르, 음악저널 콩쿠르 입상", "프랑스 Piano Campus 국제콩쿠르, 뉴질랜드 Kerikeri 국제콩쿠르, 미국 NYIAA 국제콩쿠르, 뉴욕 Heddy Kilian Empire 콩쿠르 1위 및 입상", "금호 영 아티스트 콘서트 및 New York International Artists Competition Showcase 등 국내외 무대 연주", "연세대학교 대학원 반주전공 박사과정 수료", "전문 연주자로 활동 중"], "group": "x"}, {"name": "양현주", "part": "Choir 1 Soprano", "years": [2025, 2026], "src": 2026, "bio": ["연세대학교 학사(교회음악, 경영) 졸업", "Yale University 합창지휘 석사과정 졸업", "University of Miami 박사 진학 예정"], "group": "s"}, {"name": "오승근", "part": "베이스", "years": [2022, 2025], "src": 2025, "bio": ["연세대학교 교회음악과(합창지휘) 졸업", "연세대학교 글리클럽 지휘자 역임", "미국 오하이오 대학교 합창지휘 및 음악교육학 석사 졸업"], "group": "s"}, {"name": "유예진", "part": "메조 소프라노", "years": [2018], "src": 2018, "bio": ["연세대학교 교회음악과 합창지휘전공 재학", "연세대 콘서트콰이어 유럽 투어", "현) 우신교회 임마누엘 성가대 지휘"], "group": "s"}, {"name": "유정민", "part": "Choir 1 Soprano", "years": [2026], "src": 2026, "bio": ["고양예술고등학교 성악과 졸업", "장로회신학대학교 교회음악학과 성악전공 졸업", "장로회신학대학교 합창지휘전공 석사과정 재학", "현) 서울레이디스싱어즈 단원", "YYC은평 합창단 성악코치"], "group": "s"}, {"name": "이나영", "part": "Choir 2 Soprano", "years": [2026], "src": 2026, "bio": ["총신대학교 교회음악과 지휘전공 졸업", "서울모테트청소년합창단 코치", "현) 강서성결교회 시온찬양대 지휘자", "강서성결교회 아가페찬양대 지휘자"], "group": "s"}, {"name": "이나윤", "part": "바리톤", "years": [2018, 2022], "src": 2022, "bio": ["샌디에이고 주립대학교 학사", "뉴욕 매네스 음대 석사", "Westminster Choir College, San Diego Pro Arte Voices, Bach Collegium San Diego, 바흐솔리스텐 서울 등과 연주", "현) 국내외 합창 공연 및 솔리스트 활동"], "group": "s"}, {"name": "이미선", "part": "Choir 1 Alto", "years": [2026], "src": 2026, "bio": ["연세대학교 성악과 졸업", "연세대학교 대학원 석사 졸업", "연세대학교 대학원 박사 졸업", "독일 Hannover StaatsOper 연수과정 수료"], "group": "s"}, {"name": "이민준", "part": "테너", "years": [2018], "src": 2018, "bio": ["연세대학교 약학 전공, 동 대학원 사회약학", "연세대학교 남성합창단 글리클럽", "현) 경동교회 1부 성가대 베이스 단원"], "group": "s"}, {"name": "이믿음", "part": "", "years": [2022], "src": 2022, "bio": ["계원예술고등학교, 연세대학교 음악대학 성악전공", "헨델, 모차르트, 바하, 베토벤 솔리스트", "서울시향, 드림페스티벌, 골든디스크 출연", "뮤지컬 <애니>, <사운드오브뮤직>, <위키드>, <맘마미아>, <하이스쿨 뮤지컬> 음악감독", "현) 샹떼자듀합창단, 서울컨템포콰이어, 안산고운빛합창단 단원", "현) 샤론 콰이어 지휘자, 세종문화회관 프로젝트 음악강사"], "group": "s"}, {"name": "이신행", "part": "Music Director & Conductor", "years": [2018, 2022, 2025, 2026], "src": 2026, "bio": ["연세대학교 교회음악과 합창지휘전공 졸업 (김혜옥 사사)", "Westminster Choir College 합창지휘 석사 졸업 (Joe Miller 사사)", "University of Illinois Urbana-Champaign 합창음악 박사 졸업 (Andrew Megill 사사)", "미국 NCCO 및 Chorus America Fellow 선정", "한국합창총연합회 지휘콩쿠르 1위", "한국합창지휘자협회&국립합창단 지휘콩쿠르 3위", "MidAmerica International Choral Conducting Competition Distinguished First Runner-Up 수상", "2026 The American Prize Dale Warland Award 합창지휘 프로합창 부문 National Finalist 선정", "연세대 글리클럽 지휘자 역임", "University of Illinois University Chorus 지휘자 및 Oratorio Society 조교지휘자 역임", "Westminster Symphonic Choir 및 Carmel Bach Festival Chorus 조교지휘자 역임", "ACDA Eastern Regional Conference 및 NY-ACDA Conference 초청 발표자", "미국 Colgate University 음악과 조교수 및 Director of Choral Programs", "Catskill Choral Society 임시 음악감독", "2026/27 시즌부터 Music of the Baroque 및 Philadelphia Orchestra and Symphonic Choir 전문 합창단원", "전문 합창단 Vox Amicis 창립자 및 예술감독"], "group": "g"}, {"name": "이하형", "part": "Choir 1 Bass", "years": [2026], "src": 2026, "bio": ["경기예술고등학교 성악과 졸업", "연세대학교 교회음악과 합창지휘전공 재학", "현) 코러스쿰 단원", "서울연합감리교회 지휘자"], "group": "s"}, {"name": "이현섭", "part": "테너", "years": [2025], "src": 2025, "bio": ["대전예술고등학교, 연세대학교 교회음악과 졸업", "2023 한국 차세대 합창 지휘자 콩쿠르 2위", "현) 더싱어즈, 보컬앙상블 서울, 코러스쿰 단원", "현) 국립합창단 아카데미 악보계"], "group": "s"}, {"name": "이호영", "part": "Choir 2 Alto", "years": [2025, 2026], "src": 2026, "bio": ["연세대학교 음악대학원 합창지휘 석사 졸업", "전) 양주시립합창단 객원 단원", "현) 더싱어즈 단원", "코러스쿰 단원", "Boston University 합창지휘 석사 진학 예정"], "group": "s"}, {"name": "전은배", "part": "Choir 2 Bass · 2026 객원 지휘", "years": [2018, 2025, 2026], "src": 2026, "bio": ["연세대학교 교회음악과 졸업", "Westminster Choir College 석사 졸업", "Louisiana State University 박사 졸업", "연세대 글리클럽 지휘자 역임", "현) 장신대, 수원대, 인천여중, 숙명여대 영재음악교육원 출강"], "group": "x"}, {"name": "정혜진", "part": "", "years": [2022], "src": 2022, "bio": ["연세대학교 교회음악과 성악전공 졸업", "동 대학원 합창지휘 석사", "현) 발음교회 임마누엘 성가대, VIVA 부부합창단 지휘자", "현) 인천여자중학교 출강"], "group": "s"}, {"name": "조원주", "part": "알토", "years": [2022, 2025], "src": 2025, "bio": ["연세대학교 교회음악과 합창지휘전공 학사, 동 대학원 석사 졸업", "현) 성암교회 지휘자", "현) 샹떼 자 듀 합창단, 코러스쿰 단원", "미국 노스웨스턴 대학교 석사과정 진학 예정"], "group": "s"}, {"name": "조한을", "part": "Choir 1 Tenor", "years": [2018, 2025, 2026], "src": 2026, "bio": ["계원예술고등학교 작곡과 졸업", "연세대학교 교회음악과 합창지휘전공 졸업", "Dixit Dominus 테너 솔리스트", "현) 역삼동부교회 테너 솔리스트"], "group": "s"}, {"name": "진수빈", "part": "Choir 2 Soprano", "years": [2026], "src": 2026, "bio": ["선화예술고등학교 성악전공 수석 입학 및 졸업", "건국대학교 음악교육과 성악전공 졸업", "연세대학교 일반대학원 합창지휘전공 석사 재학", "현) 한소망이룸교회 플레로마찬양대 지휘자"], "group": "s"}, {"name": "차정은", "part": "소프라노", "years": [2018, 2022, 2025], "src": 2025, "bio": ["연세대학교 성악과 졸업", "오페라 Cosi fan tutte 주역", "음악교육신문사 콩쿠르 일반부 여자 2위", "난파전국콩쿠르 대학일반부 여자 2위", "엄정행전국성악콩쿠르 대학일반부 하석배상", "다양한 오라토리오 솔리스트로 활동"], "group": "s"}, {"name": "최승주", "part": "Choir 2 Alto", "years": [2026], "src": 2026, "bio": ["이화여자대학교 성악과 졸업", "이화여자대학교 대학원 성악과 석사 졸업", "현) 중구구립합창단 외 다수 합창단 솔리스트", "이화챔버콰이어 단원", "동대문구립소년소녀합창단 발성코치", "김포사랑스러운교회 지휘자"], "group": "s"}, {"name": "최하은", "part": "알토", "years": [2025], "src": 2025, "bio": ["연세대학교 교회음악과(합창지휘) 졸업", "현) 서울모테트청소년합창단 코치", "현) 경서교회 지휘자", "현) 코러스쿰, 베스퍼스 단원", "미국 인디애나대학교 석사과정 진학 예정"], "group": "s"}, {"name": "한하영", "part": "Choir 2 Soprano", "years": [2018, 2022, 2026], "src": 2026, "bio": ["부산예술고등학교 음악과 성악전공 졸업", "연세대학교 교회음악과 합창지휘전공 졸업", "연세대학교 음악학과 합창지휘전공 석사 졸업", "연세대학교 음악학과 합창지휘전공 박사 재학", "2024 KCDA 신진지휘자 선정 국립합창단 협연", "현) 월드비전 합창단 강서반 지휘자", "코러스쿰 부지휘자", "큰나무교회 2부 찬양대 지휘자"], "group": "s"}, {"name": "C Han", "part": "소프라노", "years": [2018], "src": 2018, "bio": ["미국 뉴욕 출생", "Westminster Choir College 재학", "Westminster Choir, Westminster Kantorei, New York Choral Scene 단원"], "group": "s"}]</script>
+<script>
+(function () {
+  var data = [];
+  try { data = JSON.parse(document.getElementById('people').textContent); } catch (e) {}
+  var pop = document.getElementById('pop'), cur = null, timer = null;
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function show(btn) {
+    var p = data[+btn.dataset.i]; if (!p) return;
+    if (cur && cur !== btn) cur.setAttribute('aria-expanded', 'false');
+    cur = btn; btn.setAttribute('aria-expanded', 'true');
+    pop.innerHTML = '<div class="ph">' + (p.photo ? '<img src="' + p.photo + '" alt="">' : '') + '<div><h4>' + esc(p.name) + '</h4>' + '<p class="pt cap muted">' + p.years.join(' · ') + '</p></div></div>'
+      + '<ul>' + p.bio.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>'
+      + '<p class="src">' + p.src + '년 프로그램 기준</p>';
+    pop.hidden = false;
+    var r = btn.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight, m = 12;
+    var x = Math.min(Math.max(m, r.left), window.innerWidth - w - m);
+    var y = r.bottom + 8;
+    if (y + h > window.innerHeight - m) y = r.top - h - 8;
+    if (y < m) y = Math.max(m, Math.min(window.innerHeight - h - m, r.bottom + 8));
+    pop.style.left = x + 'px'; pop.style.top = y + 'px';
+  }
+  function hide() { pop.hidden = true; if (cur) cur.setAttribute('aria-expanded', 'false'); cur = null; }
+  document.addEventListener('mouseover', function (e) { var b = e.target.closest && e.target.closest('.nm'); if (b) { clearTimeout(timer); show(b); } });
+  document.addEventListener('mouseout', function (e) { var b = e.target.closest && e.target.closest('.nm'); if (b) { timer = setTimeout(hide, 80); } });
+  document.addEventListener('focusin', function (e) { var b = e.target.closest && e.target.closest('.nm'); if (b) show(b); });
+  document.addEventListener('focusout', function (e) { if (e.target.closest && e.target.closest('.nm')) hide(); });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.nm');
+    if (b) { if (cur === b && !pop.hidden && e.detail === 0) hide(); else show(b); return; }
+    hide();
+  });
+  window.addEventListener('scroll', hide, { passive: true });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hide(); });
+
+
+
+  // hero background: every clip on the page, silent and blurred, one after another
+  (function () {
+    var bg = document.querySelector('.herobg video'); if (!bg) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var all = [].map.call(document.querySelectorAll('.clip video'), function (v) { return v.getAttribute('src'); }).filter(Boolean);
+    if (!all.length) return;
+    var first = all[Math.floor(Math.random() * 3)];
+    var rest = all.filter(function (x) { return x !== first; });
+    for (var k = rest.length - 1; k > 0; k--) { var r = Math.floor(Math.random() * (k + 1)), tmp = rest[k]; rest[k] = rest[r]; rest[r] = tmp; }
+    var srcs = [first].concat(rest);
+    var i = 0, visible = true;
+    bg.muted = true; bg.defaultMuted = true;
+    function load(n) {
+      bg.classList.remove('on');
+      setTimeout(function () {
+        bg.src = srcs[n % srcs.length]; bg.muted = true;
+        var p = bg.play(); if (p && p.catch) p.catch(function () {});
+      }, n === 0 ? 0 : 1200);
+    }
+    bg.addEventListener('playing', function () { bg.classList.add('on'); });
+    bg.addEventListener('ended', function () { i++; load(i); });
+    bg.addEventListener('error', function () { i++; if (i < srcs.length * 2) load(i); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        visible = en[0].isIntersecting;
+        if (!visible) bg.pause(); else if (bg.src) { var p = bg.play(); if (p && p.catch) p.catch(function () {}); }
+      }).observe(document.querySelector('.hero'));
+    }
+    load(0);
+  })();
+
+  // smooth scrolling for in-page menu links
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+    var id = a.getAttribute('href').slice(1), el = id && document.getElementById(id); if (!el) return;
+    e.preventDefault();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var bar = document.querySelector('.bar'), off = bar ? bar.offsetHeight + 8 : 76;
+    var y = el.getBoundingClientRect().top + window.pageYOffset - off;
+    if (id === 'top') y = 0;
+    try { window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' }); } catch (err) { window.scrollTo(0, Math.max(0, y)); }
+  });
+
+
+  var cf = document.getElementById('contact-form');
+  if (cf) cf.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = cf.elements, msg = document.getElementById('contact-msg');
+    if (!cf.checkValidity()) { cf.reportValidity(); return; }
+    var body = f.message.value + '\n\n' + f.name.value + '\n' + f.email.value;
+    var href = 'mailto:ee.sinhaeng@gmail.com?subject=' + encodeURIComponent('[VOX AMICIS] ' + f.subject.value) + '&body=' + encodeURIComponent(body);
+    var a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+    msg.textContent = document.documentElement.lang === 'en' ? 'Your email app should open with the message ready to send.' : '메일 앱이 열립니다. 내용을 확인하고 보내 주세요.';
+  });
+
+  // YouTube links open in one small player window instead of a new tab
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.yt a'); if (!a) return;
+    var m = /[?&]v=([\w-]{11})/.exec(a.href); if (!m) return;
+    var dlg = document.getElementById('player'), f = document.getElementById('ytplayer');
+    if (!dlg || !dlg.showModal) return;
+    e.preventDefault();
+    f.src = 'https://www.youtube-nocookie.com/embed/' + m[1] + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    dlg.showModal();
+  });
+  (function () {
+    var dlg = document.getElementById('player'); if (!dlg) return;
+    function close() { var f = document.getElementById('ytplayer'); f.src = 'about:blank'; if (dlg.open) dlg.close(); }
+    document.getElementById('closeplayer').addEventListener('click', close);
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+    dlg.addEventListener('cancel', function () { document.getElementById('ytplayer').src = 'about:blank'; });
+  })();
+
+  // short background clips: silent by default, a click plays a few seconds with sound
+  var LIMIT = 8000, active = null, stopT = null;
+  function stop() {
+    if (!active) return; clearTimeout(stopT);
+    var v = active.querySelector('video'); try { v.pause(); v.currentTime = 0; } catch (e) {} v.muted = true;
+    active.classList.remove('playing'); active = null;
+  }
+  document.addEventListener('click', function (e) {
+    var c = e.target.closest && e.target.closest('.clip'); if (!c) return;
+    if (active === c) { stop(); return; }
+    stop();
+    var v = c.querySelector('video'); v.muted = false; v.currentTime = 0;
+    var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play().catch(function () {}); });
+    c.classList.add('playing'); active = c; stopT = setTimeout(stop, LIMIT);
+  });
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  var bko = document.getElementById('btn-ko'), ben = document.getElementById('btn-en');
+  function setLang(l) {
+    root.setAttribute('data-lang', l);
+    root.setAttribute('lang', l);
+    bko.setAttribute('aria-pressed', l === 'ko' ? 'true' : 'false');
+    ben.setAttribute('aria-pressed', l === 'en' ? 'true' : 'false');
+    try { localStorage.setItem('vox-lang', l); } catch (e) {}
+  }
+  var saved = 'ko';
+  try { saved = localStorage.getItem('vox-lang') || 'ko'; } catch (e) {}
+  setLang(saved === 'en' ? 'en' : 'ko');
+  bko.addEventListener('click', function () { setLang('ko'); });
+  ben.addEventListener('click', function () { setLang('en'); });
+})();
+</script>
+<dialog id="player" aria-label="Video player"><button type="button" id="closeplayer">Close</button><iframe id="ytplayer" title="YouTube video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></dialog>
+
+</html>
